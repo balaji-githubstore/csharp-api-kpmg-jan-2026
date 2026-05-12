@@ -1,0 +1,57 @@
+﻿using Newtonsoft.Json;
+using RestSharp;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Text;
+
+namespace KPMG.APIAutomation
+{
+    public class Demo1GetTest
+    {
+        [Test]
+        public void FindValidPetByIdTest()
+        {
+            var client = new RestClient(baseUrl: "https://petstore.swagger.io/v2");
+            var request = new RestRequest("pet/{petId}", Method.Get);
+
+            request.AddUrlSegment("petId", 105);
+
+            var response = client.Execute(request);
+
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Content);
+
+            //convert fron stream json to object
+            dynamic petResponse = JsonConvert.DeserializeObject(response.Content);
+            Console.WriteLine(petResponse.id);
+            Console.WriteLine(petResponse.category.id);
+
+            Assert.That(Convert.ToInt32(petResponse.id), Is.EqualTo(105));
+            //assert the name - doggie-105
+            Assert.That(Convert.ToString(petResponse.name), Is.EqualTo("doggie-105"));
+
+        }
+        [Test]
+        public void FindPetByStatusTest()
+        {
+            var client = new RestClient(baseUrl: "https://petstore.swagger.io/v2");
+            var request = new RestRequest("pet/findByStatus", Method.Get);
+            request.AddQueryParameter("status", "sold");
+
+            var response = client.Execute(request);
+
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Content);
+
+            dynamic petArrayResponse = JsonConvert.DeserializeObject(response.Content);
+            Console.WriteLine(petArrayResponse[0].status);
+
+            //use foreach and assert each status to be sold
+            foreach(var item in petArrayResponse)
+            {
+                Assert.That(Convert.ToString(item.status), Is.EqualTo("sold"));
+            }
+        }
+    }
+}
