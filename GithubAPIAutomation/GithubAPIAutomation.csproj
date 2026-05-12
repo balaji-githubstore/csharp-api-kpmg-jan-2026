@@ -28,10 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestData\updatepet.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\newpet.json">
+    <None Update="TestData\secret.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="APIAutomation/APIAutomation.csproj" />
+  <Project Path="GithubAPIAutomation/GithubAPIAutomation.csproj" />
 </Solution>
