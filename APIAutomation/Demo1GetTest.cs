@@ -33,11 +33,13 @@ namespace KPMG.APIAutomation
 
         }
         [Test]
-        public void FindPetByStatusTest()
+        [TestCase("sold")]
+        [TestCase("available")]
+        public void FindPetByStatusTest(string status)
         {
             var client = new RestClient(baseUrl: "https://petstore.swagger.io/v2");
             var request = new RestRequest("pet/findByStatus", Method.Get);
-            request.AddQueryParameter("status", "sold");
+            request.AddQueryParameter("status", status);
 
             var response = client.Execute(request);
 
@@ -50,7 +52,7 @@ namespace KPMG.APIAutomation
             //use foreach and assert each status to be sold
             foreach(var item in petArrayResponse)
             {
-                Assert.That(Convert.ToString(item.status), Is.EqualTo("sold"));
+                Assert.That(Convert.ToString(item.status), Is.EqualTo(status));
             }
         }
     }
