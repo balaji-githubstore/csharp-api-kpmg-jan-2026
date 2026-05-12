@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using GithubAPIAutomation.Support;
+using Newtonsoft.Json;
 using RestSharp;
+using System.Net;
 
 namespace GithubAPIAutomation
 {
@@ -17,17 +19,21 @@ namespace GithubAPIAutomation
             var request = new RestRequest("user/repos", Method.Get);
             request.AddHeader("Accept", "application/vnd.github+json");
             request.AddHeader("X-GitHub-Api-Version", "2026-03-10");
-            request.AddHeader("Authorization", "Bearer "+token);
+            request.AddHeader("Authorization", "Bearer " + token);
 
             var response = client.Execute(request);
 
-            Console.WriteLine(response.StatusCode);
-            Console.WriteLine(response.Content);
-
             //convert fron stream json to object
             //create a model class - Repo (property like id, node_id, name, full_name, private)
-            dynamic jsonResponse = JsonConvert.DeserializeObject(response.Content);
+            var repoResponse = JsonConvert.DeserializeObject<List<Repo>>(response.Content);
+            Console.WriteLine(repoResponse[0].Id);
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
         }
+
+
+
 
         /*
          * Make sure create a model class - Repo (property like id, node_id, name, full_name, private)
@@ -41,5 +47,6 @@ namespace GithubAPIAutomation
             List repositories for the authenticated user  --> verify the deleted repo name is not the list
             
          */
+
     }
 }
