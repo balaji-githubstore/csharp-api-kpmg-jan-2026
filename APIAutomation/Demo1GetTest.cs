@@ -59,7 +59,7 @@ namespace KPMG.APIAutomation
         }
 
         /// <summary>
-        /// Deserialize to Pet Object 
+        /// Deserialize to Pet Object instead of dynamic
         /// </summary>
         [Test]
         public void FindValidPetById2Test()
@@ -82,7 +82,7 @@ namespace KPMG.APIAutomation
 
         }
         /// <summary>
-        /// Deserialize to List<Pet> Object 
+        /// Deserialize to List<Pet> Object instead of dynamic
         /// </summary>
         [TestCase("available")]
         public void FindPetByStatus2Test(string status)
@@ -99,7 +99,7 @@ namespace KPMG.APIAutomation
             var petArrayResponse = JsonConvert.DeserializeObject<List<Pet>>(response.Content);
             Console.WriteLine(petArrayResponse[0].Status);
 
-            //use foreach and assert each status to be sold
+            //use foreach and assert each status to be sold.
             foreach (var item in petArrayResponse)
             {
                 Assert.That(Convert.ToString(item.Status), Is.EqualTo(status));
