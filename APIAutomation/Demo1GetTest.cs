@@ -105,5 +105,31 @@ namespace KPMG.APIAutomation
                 Assert.That(Convert.ToString(item.Status), Is.EqualTo(status));
             }
         }
+
+
+        [Test]
+        public async Task FindValidPetByIdTestAsync()
+        {
+            var client = new RestClient(baseUrl: "https://petstore.swagger.io/v2");
+            var request = new RestRequest("pet/{petId}", Method.Get);
+
+            request.AddUrlSegment("petId", 105);
+
+            var response = await client.ExecuteAsync(request);
+
+            Console.WriteLine(response.StatusCode);
+            Console.WriteLine(response.Content);
+
+            //convert fron stream json to object
+            dynamic petResponse = JsonConvert.DeserializeObject(response.Content);
+            Console.WriteLine(petResponse);
+            Console.WriteLine(petResponse.id);
+            Console.WriteLine(petResponse.category.id);
+
+            Assert.That(Convert.ToInt32(petResponse.id), Is.EqualTo(105));
+            //assert the name - doggie-105
+            Assert.That(Convert.ToString(petResponse.name), Is.EqualTo("doggie-105"));
+
+        }
     }
 }

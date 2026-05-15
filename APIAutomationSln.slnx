@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="APIAutomation/APIAutomation.csproj" />
   <Project Path="GithubAPIAutomation/GithubAPIAutomation.csproj" />
+  <Project Path="GraphQLAutomation/GraphQLAutomation.csproj" Id="71a48a61-024b-44a8-a1a0-74ac7376733f" />
 </Solution>
