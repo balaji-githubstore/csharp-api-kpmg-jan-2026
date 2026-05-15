@@ -14,7 +14,7 @@ namespace KPMG.APIAutomation
         {
             var client = new RestClient(baseUrl: "https://petstore.swagger.io/v2");
             var request = new RestRequest("pet/{petId}", Method.Get);
-            request.AddUrlSegment("petId", 705);
+            request.AddUrlSegment("petId", 707);
 
             var response = client.Execute(request);
 
@@ -30,6 +30,7 @@ namespace KPMG.APIAutomation
                 {
                     Console.WriteLine(error.ToString());
                 }
+                Assert.Fail("Validation Failed!!");
             }
             else
             {
